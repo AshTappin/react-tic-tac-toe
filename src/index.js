@@ -6,7 +6,9 @@ let Square  = (props) => {
         return (
             <button
                 className="square"
-                onClick={props.onClick}>
+                onClick={props.onClick}
+                style = {{background: '#39D1B4'}}
+            >
                 {props.value}
             </button>);
 };
@@ -140,21 +142,17 @@ function calculateWinner(squares) {
         [2, 4, 6]
     ];
 
-    // lines
-    //     .filter(line => {
-    //         const [a, b, c] = line;
-    //         return (squares[a]) && (squares[a] === squares[b]) && (squares[a] === squares[c]);
-    //     });
-    // TODO refactor below
-
-    for (let count = 0; count <lines.length; count++) {
-        const [a, b, c] = lines[count];
-        if ((squares[a]) && (squares[a] === squares[b]) && (squares[a] === squares[c])) {
+    const winner = lines
+        .filter(line => {
+            const [a, b, c] = line;
+            return (squares[a]) && (squares[a] === squares[b]) && (squares[a] === squares[c]);
+        })
+        .map(line => {
+            const [a] = line;
             return squares[a];
-        }
-    }
+        });
 
-    return null;
+    return winner.length === 0 ? null : winner[0];
 }
 
 function areAllSquaresFilled(squares) {
